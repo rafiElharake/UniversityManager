@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ProgrammingTutorialDB" Class="UniversityDataContextDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-FOT4SJ9;Initial Catalog=ProgrammingTutorialDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True" SettingsObjectName="UniversityManager.Properties.Settings" SettingsPropertyName="ProgrammingTutorialDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Students" Member="Students">
+    <Type Name="Student">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Student_Enrollment" Member="Enrollments" ThisKey="Id" OtherKey="StudentsId" Type="Enrollment" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Courses" Member="Courses">
+    <Type Name="Course">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="Credits" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Course_Enrollment" Member="Enrollments" ThisKey="Id" OtherKey="CourseId" Type="Enrollment" />
+      <Association Name="Course_CourseInstructor" Member="CourseInstructors" ThisKey="Id" OtherKey="CourseId" Type="CourseInstructor" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Enrollments" Member="Enrollments">
+    <Type Name="Enrollment">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="StudentsId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CourseId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EnrollmentSemester" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Course_Enrollment" Member="Course" ThisKey="CourseId" OtherKey="Id" Type="Course" IsForeignKey="true" />
+      <Association Name="Student_Enrollment" Member="Student" ThisKey="StudentsId" OtherKey="Id" Type="Student" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CourseInstructor" Member="CourseInstructors">
+    <Type Name="CourseInstructor">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CourseId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="InstructorId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Semester" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Course_CourseInstructor" Member="Course" ThisKey="CourseId" OtherKey="Id" Type="Course" IsForeignKey="true" />
+      <Association Name="Instructor_CourseInstructor" Member="Instructor" ThisKey="InstructorId" OtherKey="Id" Type="Instructor" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Instructors" Member="Instructors">
+    <Type Name="Instructor">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Instructor_CourseInstructor" Member="CourseInstructors" ThisKey="Id" OtherKey="InstructorId" Type="CourseInstructor" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Account" Member="Accounts">
+    <Type Name="Account">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Username" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>
